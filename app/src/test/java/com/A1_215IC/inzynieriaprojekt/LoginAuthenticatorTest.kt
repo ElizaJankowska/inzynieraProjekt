@@ -9,7 +9,7 @@ class LoginAuthenticatorTest {
         val accounts = ArrayList<Account>()
         accounts.add(Account("Radek", "abcabc".hashCode()))
         accounts.add(Account("Eliza", "123456".hashCode()))
-        val base = AccountDatabase(accounts)
+        val base = AccountDatabaseInterface(accounts)
 
         LoginAuthenticator.attemptLoginToDatabase("Krzysiu", "abcabc", base)
         assert(!userMode.isPremium)
@@ -20,7 +20,7 @@ class LoginAuthenticatorTest {
         val accounts = ArrayList<Account>()
         accounts.add(Account("Radek", "abcabc".hashCode()))
         accounts.add(Account("Eliza", "123456".hashCode()))
-        val base = AccountDatabase(accounts)
+        val base = AccountDatabaseInterface(accounts)
 
         LoginAuthenticator.attemptLoginToDatabase("Radek", "xyzyzx", base)
         assert(!userMode.isPremium)
@@ -31,7 +31,7 @@ class LoginAuthenticatorTest {
         val accounts = ArrayList<Account>()
         accounts.add(Account("Radek", "abcabc".hashCode()))
         accounts.add(Account("Eliza", "123456".hashCode()))
-        val base = AccountDatabase(accounts)
+        val base = AccountDatabaseInterface(accounts)
 
         LoginAuthenticator.attemptLoginToDatabase("Radek", "abcabc", base)
 
@@ -43,4 +43,5 @@ class LoginAuthenticatorTest {
         val access = accessDatabase()
         assert(!access.isEmpty())
     }
+
 }
