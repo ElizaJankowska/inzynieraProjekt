@@ -1,17 +1,26 @@
 package com.A1_215IC.inzynieriaprojekt
 
+/**
+ * this singleton is used for logging into the app's account system
+ */
+
 object LoginAuthenticator {
 
-    fun attemptLogin(user:String, passwordHash:Int, database: AccountDatabase) {
-        userMode.isPremium = checkLogin(user,passwordHash, database)
+    fun login(user:String, password:String) {
+        val base = accessDatabase()
+        attemptLoginToDatabase(user,password,base)
     }
 
-    private fun checkLogin(user:String, passwordHash:Int, database: AccountDatabase):Boolean {
-        return true
+    fun attemptLoginToDatabase(user:String, password:String, database: AccountDatabaseInterface) {
+        userMode.isPremium = database.isInBase(user, password)
     }
 
 }
 
+/**
+ * the rest of this app checks weather this Singleton holds a true value
+ * whenever it needs to know if the user is currently premium
+ */
 object userMode {
     var isPremium = false;
 }

@@ -1,6 +1,5 @@
 package com.A1_215IC.inzynieriaprojekt
 
-import org.junit.Assert.*
 import org.junit.Test
 
 class LoginAuthenticatorTest {
@@ -8,34 +7,40 @@ class LoginAuthenticatorTest {
     @Test
     fun invalidUsernameFails() {
         val accounts = ArrayList<Account>()
-        accounts.add(Account("Radek", "abcabc"))
-        accounts.add(Account("Eliza", "123456"))
+        accounts.add(Account("Radek", "abcabc".hashCode()))
+        accounts.add(Account("Eliza", "123456".hashCode()))
         val base = AccountDatabase(accounts)
 
-        LoginAuthenticator.attemptLogin("Krzysiu", "abcabc".hashCode(), base)
+        LoginAuthenticator.attemptLoginToDatabase("Krzysiu", "abcabc", base)
         assert(!userMode.isPremium)
     }
 
     @Test
     fun wrongPasswordFails() {
         val accounts = ArrayList<Account>()
-        accounts.add(Account("Radek", "abcabc"))
-        accounts.add(Account("Eliza", "123456"))
+        accounts.add(Account("Radek", "abcabc".hashCode()))
+        accounts.add(Account("Eliza", "123456".hashCode()))
         val base = AccountDatabase(accounts)
 
-        LoginAuthenticator.attemptLogin("Radek", "xyzyzx".hashCode(), base)
+        LoginAuthenticator.attemptLoginToDatabase("Radek", "xyzyzx", base)
         assert(!userMode.isPremium)
     }
 
     @Test
-    fun perfectLogin() {
+    fun perfectLoginSucceeds() {
         val accounts = ArrayList<Account>()
-        accounts.add(Account("Radek", "abcabc"))
-        accounts.add(Account("Eliza", "123456"))
+        accounts.add(Account("Radek", "abcabc".hashCode()))
+        accounts.add(Account("Eliza", "123456".hashCode()))
         val base = AccountDatabase(accounts)
 
-        LoginAuthenticator.attemptLogin("Radek", "abcabc".hashCode(), base)
+        LoginAuthenticator.attemptLoginToDatabase("Radek", "abcabc", base)
 
         assert(userMode.isPremium)
+    }
+
+    @Test
+    fun accessSuccesfull() {
+        val access = accessDatabase()
+        assert(!access.isEmpty())
     }
 }
